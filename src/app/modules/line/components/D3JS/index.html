@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3</title>
+    <style>
+        svg {
+            border: 1px solid red;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 2px;
+        }
+    </style>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    <!-- https://observablehq.com/@d3/line-chart -->
+    <h1>D3.JS</h1>
+    <div id="line-chart"></div>
+
+    <script>
+        const DATA = [
+            { x: 1, y: 3 },
+            { x: 2, y: 6 },
+            { x: 3, y: 5 },
+            { x: 4, y: 1 },
+            { x: 5, y: 2 },
+        ];
+
+
+        // set the dimensions and margins of the graph
+        var margin = { top: 20, right: 20, bottom: 30, left: 50 },
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+
+        // set the ranges
+        // Scale the range of the data
+        // https://github.com/d3/d3-scale/blob/v2.2.2/README.md#continuous-scales
+        var x_scale = d3.scaleLinear()
+            .range([0, width])
+            .domain([0, d3.max(DATA, (d) => d.x)]);
+
+        var y_scale = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, d3.max(DATA, (d) => d.y)]);
+
+
+        // define the line
+        var value_line = d3.line()
+            .x((d) => x_scale(d.x))
+            .y((d) => y_scale(d.y));
+
+
+        // I. ...
+        const svg = d3.select('#line-chart')
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        // II. ...
+        // Add the valueline path.
+        // attr => https://github.com/d3/d3-transition/blob/v1.3.2/README.md#transition_attr
+        svg.append("path")
+            .data([DATA])
+            .attr("class", "line")
+            .attr("d", value_line);
+
+        // III. ...
+        // Add the X Axis
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x_scale));
+
+        // IV. ...
+        // Add the Y Axis
+        svg.append("g")
+            .call(d3.axisLeft(y_scale));
+
+    </script>
+</body>
+
+</html>
