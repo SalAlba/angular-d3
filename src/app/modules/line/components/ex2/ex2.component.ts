@@ -26,8 +26,8 @@ export class Ex2Component implements OnInit {
   private margin = { top: 20, right: 20, bottom: 30, left: 50 };
   private width: number;
   private height: number;
-  private x: any;
-  private y: any;
+  private x_scale: any;
+  private y_scale: any;
   private svg: any;
   private line: d3Shape.Line<[number, number]>;
 
@@ -41,8 +41,9 @@ export class Ex2Component implements OnInit {
     this.width = 900 - this.margin.left - this.margin.right;
     this.height = 500 - this.margin.top - this.margin.bottom;
     this.initSvg();
-    this.initAxis();
-    this.drawAxis();
+    this.initScalers();
+    this.drawXAxis();
+    this.drawYAxis();
     this.drawLine();
   }
 
@@ -52,22 +53,30 @@ export class Ex2Component implements OnInit {
       .attr('transform', `translate( ${this.margin.left}, ${this.margin.top})`);
   }
 
-  private initAxis() {
-    this.x = d3Scale.scaleTime().range([0, this.width]);
-    this.y = d3Scale.scaleLinear().range([this.height, 0]);
-    this.x.domain(d3Array.extent(DATA, (d) => d.x));
-    this.y.domain(d3Array.extent(DATA, (d) => d.y));
+  private initScalers() {
+    this.x_scale = d3Scale.scaleLinear()
+      .range([0, this.width])
+      .domain(d3Array.extent(DATA, (d) => d.x));
+
+    this.y_scale = d3Scale.scaleLinear()
+      .range([this.height, 0])
+      .domain(d3Array.extent(DATA, (d) => d.y));
+
   }
 
-  private drawAxis() {
-    this.svg.append('g')
+  private drawXAxis() {
+    this.svg
+      .append('g')
       .attr('class', 'axis axis--x')
-      .attr('transform', 'translate(0,' + this.height + ')')
-      .call(d3Axis.axisBottom(this.x));
+      .attr('transform', `translate(0, ${this.height})`)
+      .call(d3Axis.axisBottom(this.x_scale));
+  }
 
-    this.svg.append('g')
+  private drawYAxis() {
+    this.svg
+      .append('g')
       .attr('class', 'axis axis--y')
-      .call(d3Axis.axisLeft(this.y))
+      .call(d3Axis.axisLeft(this.y_scale))
       .append('text')
       .attr('class', 'axis-title')
       .attr('transform', 'rotate(-90)')
@@ -79,12 +88,14 @@ export class Ex2Component implements OnInit {
 
   private drawLine() {
     this.line = d3Shape.line()
-      .x((d: any) => this.x(d.x))
-      .y((d: any) => this.y(d.y));
+      .x((d: any) => this.x_scale(d.x))
+      .y((d: any) => this.y_scale(d.y));
 
     this.svg.append('path')
       .datum(DATA)
       .attr('class', 'line')
+      .attr('fill', 'none')
+      .attr('stroke', 'steelblue')
       .attr('d', this.line);
   }
 }
