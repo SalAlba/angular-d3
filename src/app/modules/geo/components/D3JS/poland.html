@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Poland</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="map.css">
+    <style></style>
+</head>
+
+<body>
+    <div id="container" class="svg-container"></div>
+    <script type="text/javascript">
+        var w = 1400;
+        var h = 700;
+        const svg = d3.select("div#container")
+            .append("svg")
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .style("background-color", "#c9e8fd")
+            .attr("viewBox", "0 0 " + w + " " + h)
+            .classed("svg-content", true);
+
+        // 21.5613689422608, 53.373596191406364
+        var projection = d3.geoMercator().translate([w / 2, h / 2]).scale(4000).center([20, 52]);
+        var path = d3.geoPath().projection(projection);
+
+        // load data
+        // when you locally use d3.json(), could not work to fix check the link bellow
+        // https://stackoverflow.com/questions/17214293/importing-local-json-file-using-d3-json-does-not-work
+        var worldmap = d3.json("./poland_woj.json", (d) => console.log('==>> ', d));
+        // var cities = d3.csv("./cities.csv");
+        var cities = [
+            {
+                city: 'Warszawa',
+                longitude: 20.5613689422608,
+                lattitude: 52.373596191406364
+            }
+        ];
+
+
+        Promise.all([worldmap, cities]).then(function (values) {
+            // ...
+            console.log('Values');
+            console.log(values);
+
+            // draw map
+            svg.selectAll("path")
+                .data(values[0].features)
+                .enter()
+                .append("path")
+                .attr("class", "continent")
+                .attr("d", path);
+
+            // draw points
+            svg.selectAll("circle")
+                .data(values[1])
+                .enter()
+                .append("circle")
+                .attr("class", "circles")
+                .attr("cx", (d) => projection([d.longitude, d.lattitude])[0])
+                .attr("cy", (d) => projection([d.longitude, d.lattitude])[1])
+                .attr("r", "10px");
+
+            // add labels
+            svg.selectAll("text")
+                .data(values[1])
+                .enter()
+                .append("text")
+                .text((d) => d.city)
+                .attr("x", (d) => projection([d.longitude, d.lattitude])[0] + 5)
+                .attr("y", (d) => projection([d.longitude, d.lattitude])[1] + 15)
+                .attr("class", "labels");
+        });
+
+    </script>
+</body>
+
+</html>
