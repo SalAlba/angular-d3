@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, ElementRef } from '@angular/core';
 
 import * as d3 from 'd3';
 
@@ -23,6 +23,7 @@ const DATA = [
 })
 export class Ex2Component implements OnInit {
 
+
   private margin = { top: 20, right: 20, bottom: 30, left: 50 };
   private width: number;
   private height: number;
@@ -31,7 +32,8 @@ export class Ex2Component implements OnInit {
   private svg: any;
   private line: d3Shape.Line<[number, number]>;
 
-  constructor() {
+  constructor(private elf: ElementRef) {
+
     // let scaleLinear_1 = d3.scaleLinear();
     // let scaleLinear_2 = d3Scale.scaleLinear();
   }
@@ -45,7 +47,10 @@ export class Ex2Component implements OnInit {
     this.drawXAxis();
     this.drawYAxis();
     this.drawLine();
+
   }
+
+
 
   private initSvg() {
     this.svg = d3.select('svg')
