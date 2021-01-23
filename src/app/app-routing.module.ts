@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/geo/geo-routing.module').then(m => m.GEORoutingModule)
   },
   {
+    path: 'random',
+    loadChildren: () => import('./modules/random/random.module').then(m => m.RandomModule)
+  },
+  {
     path: '**',
     redirectTo: 'line',
   },

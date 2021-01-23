@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <style>
+        svg {
+            border: solid 1px lightgray;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>SVG clipping</h2>
+    <p>See results in console log.</p>
+    <div id="section">
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+    </div>
+    <p>Paragraph 3</p>
+
+    <svg width="425" height="425"> </svg>
+    <script>
+        const div = d3.select("#section");       // selects element with the "section" ID
+        const domDiv = div.node();               // converts the object into a  DOM node
+        const firstP = d3.select("p");           // selects the first <p> in the page
+        const allParagraphs = d3.selectAll("p"); // selects all four <p> nodes  in the page
+        const allPDom = allParagraphs.nodes();   // converts selection into DOM nodelist
+
+        const sectionParagraphs = d3.select("div").selectAll("p");       // selects the two <p> nodes  inside <div>
+
+
+        console.log(allPDom);
+        console.log(allPDom[0]);
+        console.log(typeof allPDom[0]);
+    </script>
+</body>
+
+</html>

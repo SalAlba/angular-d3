@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX3</title>
+</head>
+
+<body>
+    <svg width="800" height="150">
+
+        <!-- Placing text at 0,0 -->
+        <g transform="translate(50,50)">
+            <rect x="0" y="0" height="36" width="200" />
+            <text font-size="36" x="0" y="0" fill="lightgray">ghijklmnop</text>
+        </g>
+
+        <!-- Placing text at 0,0 -->
+        <g transform="translate(300,50)">
+            <rect x="0" y="0" height="36" width="200" />
+            <text font-size="36" x="0" y="0" fill="lightgray" alignment-baseline="middle">ghijklmnop</text>
+        </g>
+
+        <!-- Placing text at 0,0 -->
+        <g transform="translate(550,50)">
+            <rect x="0" y="0" height="36" width="200" />
+            <text font-size="36" x="0" y="0" fill="lightgray" alignment-baseline="hanging">ghijklmnop</text>
+        </g>
+
+    </svg>
+
+    <svg width="800" height="300">
+
+        <text font-family="monospace" font-size="18" transform="translate(150,25)" text-anchor="middle">
+            text-anchor
+        </text>
+
+        <text font-family="monospace" font-size="18" transform="translate(400,25)" text-anchor="start">
+            alignment-baseline
+        </text>
+
+        <!-- text-anchor -->
+        <g transform="translate(150,115)">
+            <g id="grid" stroke="blue" stroke-width="1" stroke-opacity=".8" stroke-dasharray="10 10">
+                <line x1="0" y1="-25" x2="0" y2="150" />
+            </g>
+            <text font-family="monospace" font-size="24" font-weight="bold">
+                <tspan x="0" y="0" text-anchor="start">start</tspan>
+                <tspan x="0" dy="60" text-anchor="middle">middle</tspan>
+                <tspan x="0" dy="60" text-anchor="end">end</tspan>
+            </text>
+        </g>
+
+        <!-- alignment-baseline -->
+        <g transform="translate(350,50)">
+            <g transform="translate(50,50)" stroke="blue" stroke-width="1">
+                <line x1="0" y1="0" x2="300" y2="0" />
+                <line x1="0" y1="50" x2="300" y2="50" />
+                <line x1="0" y1="100" x2="300" y2="100" />
+                <line x1="0" y1="150" x2="300" y2="150" />
+            </g>
+            <g transform="translate(50,50)" text-anchor="start" font-family="monospace" font-size="24"
+                font-weight="bold">
+                <text x="0" y="0" alignment-baseline="ideographic">ideographic</text>
+                <text x="0" y="50" alignment-baseline="auto">auto</text>
+                <text x="0" y="100" alignment-baseline="middle">middle</text>
+                <text x="0" y="150" alignment-baseline="hanging">hanging</text>
+            </g>
+        </g>
+    </svg>
+
+    <svg width="600" height="200">
+        <g transform="translate(50,50)">
+            <!-- Each word -->
+            <text x="5" y="15">
+                <tspan dx="0" dy="0">One</tspan>
+                <tspan dy="15">Two</tspan>
+                <tspan dy="15">Three</tspan>
+                <tspan dy="15">Four</tspan>
+                <tspan dy="15">Five</tspan>
+
+                <tspan x="5" dy="0">One</tspan>
+                <tspan dy="-15">Two</tspan>
+                <tspan dy="-15">Three</tspan>
+                <tspan dy="-15">Four</tspan>
+                <tspan dy="-15">Five</tspan>
+            </text>
+
+            <!-- Each character -->
+            <text x="5" y="15" transform="translate(300,0)">
+                <tspan fill="red" dy="0 0 0 0 15 0 0 0 7 3 3 3 3 0 7 0 0 0 0 15 0 0 0">One Two +++++ Four Five</tspan>
+                <tspan fill="blue" x="5" dy="0 0 0 0 -15 0 0 0 -7 -3 -3 -3 -3 0 -7 0 0 0 0 -15 0 0 0">One Two +++++ Four
+                    Five</tspan>
+            </text>
+        </g>
+    </svg>
+</body>
+
+</html>

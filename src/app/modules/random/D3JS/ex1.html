@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX1</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        svg {
+            border: 1px red solid;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>EX1</h1>
+    <svg id="chart-1" width="600" height="200"></svg>
+    <svg id="chart-2" width="600" height="200"></svg>
+    <svg id="chart-3" width="600" height="200"></svg>
+    <script>
+        // ...
+        const array = [100, 200, 300, 350, 375, 400, 500];
+
+        // ...
+        d3.select("#chart-1")     // selects the svg element by id (like JQuery)
+            .selectAll("circle")  // declares the elements we would like to create
+            .data([100])          // sets the data to drive the creation of the  elements
+            .enter()              // creates a selection to add elements per data item
+            .append("circle")     // appends an element of this type to each  data item
+            .attr("r", 10)      // sets “r” attribute
+            .attr("cy", 100)    // sets “cy” attribute
+            .attr("cx", d => d); // sets “cx” attribute (same as function(d) { return d; }
+
+
+        /*
+        The preceding JavaScript code selects the <svg> element from the page and then selects all <circle> elements inside it.
+        But there aren’t any, so the selection is empty.
+        The next line, however, contains a data() command with a one-element array: [100].
+        The enter() command binds the data to the selection creating a selection of <circle> placeholders the same size as the data array.
+        In this case, it will only contain one placeholder.
+        Finally, the append() command, called in the context of this selection, appends a <circle> element to it, making it a child of the <svg> element.
+        The last three commands set attribute values and the last one takes a function and returns the element received by the function,
+        which is used as the attribute's value. This element is the value 100 that was stored in the array passed to the data() command.
+        */
+
+        //****************************************************
+        d3.select("#chart-2")     // selects the svg element by id (like JQuery)
+            .append("circle")     // appends an element of this type to each  data item
+            .attr("r", 10)      // sets “r” attribute
+            .attr("cy", 100)    // sets “cy” attribute
+            .attr("cx", 100); // sets “cx” attribute
+
+        //****************************************************
+        d3.select("#chart-3")     // selects the svg element by id (like JQuery)
+            .selectAll("circle")  // declares the elements we would like to create
+            .data(array)          // sets the data to drive the creation of the  elements
+            .enter()              // creates a selection to add elements per data item
+            .append("circle")     // appends an element of this type to each  data item
+            .attr("r", 10)      // sets “r” attribute
+            .attr("cy", 100)    // sets “cy” attribute
+            .attr("cx", d => d); // sets “cx” attribute (same as function(d) { return d; }
+
+        setTimeout(
+            () => {
+                d3.select("#chart-3")
+                    .selectAll("circle")
+                    .data([50, 75, 125, 225, 325, 425, 450])
+                    .transition().duration(1000)    // You just need to chain a transition() command before the attributes and styles that changed.
+                    .attr("r", 5)
+                    .attr("cx", d => d)
+                    .style("fill", "red");
+            },
+            2000);
+
+    </script>
+</body>
+
+</html>

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { LineModule } from "./modules/line/line.module";
 import { GEOModule } from "./modules/geo/geo.module";
+import { RandomModule } from "./modules/random/random.module";
 
 // components ...
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     LineModule,
     GEOModule,
+    RandomModule,
     AppRoutingModule
   ],
   providers: [],
